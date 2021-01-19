@@ -1,0 +1,48 @@
+label {
+	text-transform: uppercase;
+	color: blue;
+}
+
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 640px;
+}
+
+#dropzone  { 
+	margin-top: 3px; 
+	width: 800px; 
+	height: 600px; 
+	border-style: dashed; 
+	border-color: red;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#simulator { 
+	width: 80%  ; 
+	height: 80%  ; 
+	border-style: dashed; 
+	border-color: green;
+}
+
+#draggable { 
+	width: 150px; 
+	height: 150px; 
+	padding: 0.5em; 
+	border-style: dashed; 
+	border-color: blue;
+}
+
+#resizable { 
+	width: 150px; 
+	height: 150px; 
+	padding: 0.5em; 
+}
+
+#resizable h3 { 
+	text-align: center; 
+	margin: 0;
+}

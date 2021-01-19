@@ -1,0 +1,65 @@
+{
+	"name": "android-xml-editor",
+	"description": "Android XML Editor",
+	"version": "0.0.1",
+	"publisher": "TotalCross",
+	"engines": {
+		"vscode": "^1.47.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"*"
+	],
+	"repository": {
+		"type": "git",
+		"url": ""
+	},
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "android-xml-editor.open",
+				"title": "Open",
+				"category": "Android XML Editor"
+			}
+		],
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "android-xml-editor",
+                    "title": "Android XML Editor",
+					"icon": "resources/android-xml-editor.svg"
+                }
+            ]
+        },
+        "views": {
+            "android-xml-editor": [
+				{
+					"id": "android-xml-editor.dashboard",
+					"name": "Project"
+				},
+				{
+					"id": "android-xml-editor.quickAccess",
+					"name": "Quick Access"
+				}
+			]
+        }
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"lint": "eslint . --ext .ts,.tsx",
+		"watch": "tsc -w -p ./"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"@types/node": "^14.11.8",
+		"@types/vscode": "^1.47.0",
+		"@typescript-eslint/eslint-plugin": "^3.0.2",
+		"@typescript-eslint/parser": "^3.0.2",
+		"eslint": "^7.1.0",
+		"typescript": "^4.0.2"
+	}
+}
