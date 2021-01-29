@@ -48,6 +48,20 @@ class AppPanel {
 			: undefined;
 
 		// If we already have a panel, show it.
+		const editor = vscode.window.activeTextEditor;
+		
+		if (editor) {			
+			const selection = editor.document.uri ;
+			
+
+			const word = fs.readFileSync(selection.path,'utf8')
+			
+			//parser *******
+            // ***********
+			const htmlPathOnDisk = vscode.Uri.joinPath(extensionUri, 'media', 'main.html');
+
+			fs.writeFileSync(htmlPathOnDisk.path,word);
+		}
 		if (AppPanel.currentPanel) {
 			AppPanel.currentPanel._panel.reveal(column);
 			return;
