@@ -54,13 +54,20 @@ class AppPanel {
 			const selection = editor.document.uri ;
 			
 
-			const word = fs.readFileSync(selection.path,'utf8')
+			const xml = fs.readFileSync(selection.path,'utf8')
 			
-			//parser *******
+			//parser xml to json*******
+			var convert = require('xml-js');
+			
+			var json= convert.xml2json(xml, {compact: true, spaces: 4});
+			// var json = convert.xml2json(xml, {compact: false, spaces: 4});
+			
+			//parser json to html*******
+			const html = json
             // ***********
 			const htmlPathOnDisk = vscode.Uri.joinPath(extensionUri, 'media', 'main.html');
 
-			fs.writeFileSync(htmlPathOnDisk.path,word);
+			fs.writeFileSync(htmlPathOnDisk.path,"<p>"+html+"</p>");
 		}
 		if (AppPanel.currentPanel) {
 			AppPanel.currentPanel._panel.reveal(column);
