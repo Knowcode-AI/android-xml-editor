@@ -52,22 +52,25 @@ class AppPanel {
 		
 		if (editor) {			
 			const selection = editor.document.uri ;
-			
-
+			const htmlPathOnDisk = vscode.Uri.joinPath(extensionUri, 'media', 'main.html');
 			const xml = fs.readFileSync(selection.path,'utf8')
 			
 			//parser xml to json*******
 			var convert = require('xml-js');
-			
-			var json= convert.xml2json(xml, {compact: true, spaces: 4});
+
+			var json = convert.xml2json(xml, {compact: true, spaces: 4});
 			// var json = convert.xml2json(xml, {compact: false, spaces: 4});
+
+			fs.writeFileSync(htmlPathOnDisk.path,"<p>\n"+json+"\n</p>");
+			json= JSON.parse(json);
 			
-			//parser json to html*******
+			//parser json to html*****s**
+
 			const html = json
             // ***********
-			const htmlPathOnDisk = vscode.Uri.joinPath(extensionUri, 'media', 'main.html');
+			
 
-			fs.writeFileSync(htmlPathOnDisk.path,"<p>"+html+"</p>");
+			// fs.writeFileSync(htmlPathOnDisk.path,html);
 		}
 		if (AppPanel.currentPanel) {
 			AppPanel.currentPanel._panel.reveal(column);
