@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
+import * as path from 'path';
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
@@ -49,9 +50,24 @@ class AppPanel {
 
 		// If we already have a panel, show it.
 		const editor = vscode.window.activeTextEditor;
+		const selection = editor.document.uri;
+
+		const panel = vscode.window.createWebviewPanel(
+			AppPanel.viewType,
+			'App',
+			column || vscode.ViewColumn.One,
+			{
+				// Enable javascript in the webview
+				enableScripts: true,
+
+				// And restrict the webview to only loading content from our extension's `media` directory.
+				localResourceRoots: [vscode.Uri.joinPath(extensionUri, 'media')]
+			}
+		);
 		
-		if (editor) {			
-			const selection = editor.document.uri ;
+		if (editor) {		
+			let workspaceFolder = vscode.workspace.getWorkspaceFolder(editor.document.uri);
+    		let rootUri = workspaceFolder?.uri	
 			const htmlPathOnDisk = vscode.Uri.joinPath(extensionUri, 'media', 'main.html');
 			const xml = fs.readFileSync(selection.path,'utf8')
 			
@@ -61,10 +77,110 @@ class AppPanel {
 			var json = convert.xml2json(xml, {compact: true, spaces: 4});
 			// var json = convert.xml2json(xml, {compact: false, spaces: 4});
 
-			fs.writeFileSync(htmlPathOnDisk.path,"<p>\n"+json+"\n</p>");
-			json= JSON.parse(json);
+			//fs.writeFileSync(htmlPathOnDisk.path,"<p>\n"+json+"\n</p>");
+			json = JSON.parse(json);
+			let xmlinfo = [];
+			let xmlcode = [];
+			let xmlTmgBtn = [];
+			let xmlImg = [];
+	
+			for (var prop in json["androidx.constraintlayout.widget.ConstraintLayout"]) {
+				if(prop == "_attributes"){
+					let string = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]["android:background"].replace(/@drawable\//gi , '')
+					if(string.substr(0, 1) === "#") {
+						let layout_height = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]["android:layout_height"].replace("dp", "px")
+						let layout_width = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]["android:layout_width"].replace("dp", "px")
+						let background = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]["android:background"].replace(/@drawable\//gi , '')
+						
+						let resolution = `<div style="height: `+ layout_height +` ;background-color: `+ background+ `; width:` + layout_width +`;"> `
+						xmlinfo.push(resolution)
+
+					}else{
+
+						let layout_height = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]["android:layout_height"].replace("dp", "px")
+						let layout_width = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]["android:layout_width"].replace("dp", "px")
+						let background = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]["android:background"].replace(/@/gi , '/')
+						let uri = vscode.Uri.joinPath(extensionUri, "media", background+".png");
+						let img = panel.webview.asWebviewUri(uri);
+						
+						let resolution = `<div style="height: `+ layout_height +` ;background: url('`+ img+ `'); width:` + layout_width +` ; background-position: center; background-size: cover;"> `
+						xmlinfo.push(resolution)
+
+					}
+					
+					
+
+				}
+
+				if(prop == "ImageView"){
+					let ImageView = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]
+					for (let IMGprop in ImageView){
+
+						let id = ImageView[IMGprop]["_attributes"]["android:id"].replace('@+id\/', '')
+						let layout_width = ImageView[IMGprop]["_attributes"]["android:layout_width"].replace("dp", "px")
+						let layout_height = ImageView[IMGprop]["_attributes"]["android:layout_height"].replace("dp", "px")
+						let layout_editor_absoluteX = ImageView[IMGprop]["_attributes"]["tools:layout_editor_absoluteX"].replace("dp", "px")
+						let layout_editor_absoluteY = ImageView[IMGprop]["_attributes"]["tools:layout_editor_absoluteY"].replace("dp", "px")
+						let background = ImageView[IMGprop]["_attributes"]["android:background"].replace(/@/gi , '/')
+						let uri = vscode.Uri.joinPath(extensionUri, "media", background+".png");
+						let  img = panel.webview.asWebviewUri(uri);
+
+						let code = `<img src= "`+ img+ `" id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+						layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"></img>`
+						xmlImg.push(code)					
+					}
+
+				}if(prop == 'TextView'){
+					let TextView = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]
+					for (let Txtprop in TextView){
+						let textColor = TextView[Txtprop]["_attributes"]["android:textColor"]
+						let textSize = TextView[Txtprop]["_attributes"]["android:textSize"].replace("dp", "px")
+						let text = TextView[Txtprop]["_attributes"]["android:text"]
+						let layout_editor_absoluteX = TextView[Txtprop]["_attributes"]["tools:layout_editor_absoluteX"].replace("dp", "px")
+						let layout_editor_absoluteY = TextView[Txtprop]["_attributes"]["tools:layout_editor_absoluteY"].replace("dp", "px")
+
+						let code = `<p style="position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+						layout_editor_absoluteY + `; color:`+ textColor +`; font-size:`+ textSize + `;">` +text+`</p>`
+						xmlcode.push(code)
+					}
+
+				}if(prop == "ImageButton"){
+					let ImageButton = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]
+					for (let ImgBprop in ImageButton){
+						let id = ImageButton[ImgBprop]["_attributes"]["android:id"].replace('@+id\/', '')
+						let layout_width = ImageButton[ImgBprop]["_attributes"]["android:layout_width"].replace("dp", "px")
+						let layout_height = ImageButton[ImgBprop]["_attributes"]["android:layout_height"].replace("dp", "px")
+						let layout_editor_absoluteX = ImageButton[ImgBprop]["_attributes"]["tools:layout_editor_absoluteX"].replace("dp", "px")
+						let layout_editor_absoluteY = ImageButton[ImgBprop]["_attributes"]["tools:layout_editor_absoluteY"].replace("dp", "px")
+						let background = ImageButton[ImgBprop]["_attributes"]["android:background"].replace(/@/gi , '/')
+						let uri = vscode.Uri.joinPath(extensionUri, "media", background+".png");
+						let  img = panel.webview.asWebviewUri(uri);
+
+						let code = `<img src= "`+ img+ `" id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+						layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"></img>`
+						xmlTmgBtn.push(code)					
+					}
+				}
+				
+			}
+			
+			let main = `<!DOCTYPE html>
+			<html>
+			<head>
+			<meta charset="UTF-8"/>
+			<title>Document</title>
+			</head>
+			<body>` + xmlinfo.join('')
+			+xmlcode.join('')+
+			xmlTmgBtn.join('')+
+			xmlImg.join('') +
+			`</div></body>
+			</html>`
+
+			fs.writeFileSync(htmlPathOnDisk.path,main);
 			
 			//parser json to html*****s**
+			//fs.writeFileSync(htmlPathOnDisk.path,"<p>\n"+name+"\n</p>");
 
 			const html = json
             // ***********
@@ -78,18 +194,7 @@ class AppPanel {
 		}
 
 		// Otherwise, create a new panel.
-		const panel = vscode.window.createWebviewPanel(
-			AppPanel.viewType,
-			'App',
-			column || vscode.ViewColumn.One,
-			{
-				// Enable javascript in the webview
-				enableScripts: true,
-
-				// And restrict the webview to only loading content from our extension's `media` directory.
-				localResourceRoots: [vscode.Uri.joinPath(extensionUri, 'media')]
-			}
-		);
+		
 
 		AppPanel.currentPanel = new AppPanel(panel, extensionUri);
 	}
