@@ -60,7 +60,7 @@ Choose the way to contribute and follow these steps:
 * :bulb: [Allan C.M Lira](https://github.com/acmlira)
 * :man_technologist: [Mateus Lima](https://github.com/mateuslimax22)
 * :man_technologist: [Patrick Lima](https://github.com/pattrickx)
-* :books: [Iaggo Quesado](https://github.com/Iaggoq)
+* :books: [Iaggo Quezado](https://github.com/Iaggoq)
 * :books: [Vaneska Sousa](https://github.com/VaneskaSousa)
 
 ## :loudspeaker: Contact
