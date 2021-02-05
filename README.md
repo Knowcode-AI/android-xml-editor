@@ -18,7 +18,9 @@
   <a href="https://totalcross.com/community/" target="_blank">Community</a>
 </div>
 
+
 Extension that interprets the XML file - transforming it into HTML - and displays it in a web view in VSCode, which is lighter than Android Studio and InteliJ
+
 
 ## :sparkles: Features
 * Read and XML file
