@@ -18,9 +18,18 @@
   <a href="https://totalcross.com/community/" target="_blank">Community</a>
 </div>
 
-<div align="center"><img src="https://github.com/TotalCross/totalcross-embedded-samples/workflows/Java%20CI%20with%20Maven/badge.svg"/></div>
+Extension that interprets the XML file - transforming it into HTML - and displays it in a web view in VSCode, which is lighter than Android Studio and InteliJ
 
-## Developers
+## :sparkles: Features
+* Read and XML file
+* Displaying the XML file in the webview
+* Real-time webview editing
+
+## :rotating_light: Requirements
+* VS Code 1.47+
+* Have an .xml file inside the `src/main/resources` directory
+
+## :woman_technologist: Usage
 
 To start the development:
 1. Clone
