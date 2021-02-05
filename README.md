@@ -2,7 +2,7 @@
 <div align="center"> <a href="https://totalcross.com/" target="_blank"> <img src="https://github.com/TotalCross/totalcross/blob/master/totalcross.gif" alt="totalcross logo"/></a></div>
 
 <div align="center"> 
-<h1> XML-Editor </h1> </div>
+<h1> Android-XML-Editor </h1> </div>
 <p align="center"> Editor for XML files in VSCode </strong></em></p>
 
 <div align="center">
@@ -31,18 +31,18 @@ Extension that interprets the XML file - transforming it into HTML - and display
 * VS Code 1.47+;
 * all images and media (assets) must be in this `src/main/resources/drawable` directory.
 
-## :woman_technologist: Using XML-Editor plugin
+## :woman_technologist: Using Android-XML-Editor plugin
 
 1. Open your XML file on VSCode
 ![](https://i.imgur.com/i7wzQFI.jpg)
 
-1. Press `F1` or `cmd + shift + p` and search for `XML Editor: Open`.
+1. Press `F1` or `cmd + shift + p` and search for `Android XML Editor: Open`.
 ![](https://i.imgur.com/hrdNrwB.jpg)
 
 1. You can start making changes to your XML file and follow the result through the webview
 ![](https://i.imgur.com/6dcCXu2.jpeg)
 
-## :construction: Contributing to xml-editor:
+## :construction: Contributing to Android-XML-Editor:
 Choose the way to contribute and follow these steps:
 
 ### With code:
@@ -53,8 +53,8 @@ Choose the way to contribute and follow these steps:
 5. Create the [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
 ### Help us to improve:
-* Find bugs and let us know by creating a [bug report](https://github.com/TotalCross/xml-editor/issues);
-* Create [features request](https://github.com/TotalCross/xml-editor/issues) to indicate the features you want to see working in this plugin.
+* Find bugs and let us know by creating a [bug report](https://github.com/TotalCross/android-xml-editor/issues);
+* Create [features request](https://github.com/TotalCross/android-xml-editor/issues) to indicate the features you want to see working in this plugin.
 
 ## :computer: Moderators
 * :bulb: [Allan C.M Lira](https://github.com/acmlira)
