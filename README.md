@@ -23,20 +23,20 @@ Extension that interprets the XML file - transforming it into HTML - and display
 
 
 ## :sparkles: Features
-* Read and XML file
-* Displaying the XML file in the webview
-* Real-time webview editing
+* Read and XML file;
+* Displaying the XML file in the webview;
+* Real-time webview editing.
 
 ## :rotating_light: Requirements
-* VS Code 1.47+
-* all images and media (assets) must be in this `src/main/resources/drawable` directory
+* VS Code 1.47+;
+* all images and media (assets) must be in this `src/main/resources/drawable` directory.
 
 ## :woman_technologist: Using XML-Editor plugin
 
 1. Open your XML file on VSCode
 ![](https://i.imgur.com/i7wzQFI.jpg)
 
-1. Press F1 or cmd + shift + p and search for XML Editor: Open.
+1. Press `F1` or `cmd + shift + p` and search for `XML Editor: Open`.
 ![](https://i.imgur.com/hrdNrwB.jpg)
 
 1. You can start making changes to your XML file and follow the result through the webview
