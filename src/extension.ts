@@ -5,7 +5,7 @@ import * as path from 'path';
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('android-xml-editor.open', () => {
-			AppPanel.createOrShow(context.extensionUri);
+			AppPanel.createOrShow(context.extensionUri)
 		})
 	);
 
@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
 		})
 	);
 
-	if (vscode.window.registerWebviewPanelSerializer) {
+	if(vscode.window.registerWebviewPanelSerializer) {
 		// Make sure we register a serializer in activation event
 		vscode.window.registerWebviewPanelSerializer(AppPanel.viewType, {
 			async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
@@ -26,6 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		});
 	}
+
 }
 
 /**
@@ -51,6 +52,16 @@ class AppPanel {
 		// If we already have a panel, show it.
 		const editor = vscode.window.activeTextEditor;
 		const selection = editor.document.uri;
+		let workspaceFolder = vscode.workspace.getWorkspaceFolder(editor.document.uri);
+		let rootUri = workspaceFolder?.uri	
+		
+		const fse = require('fs-extra');
+		var sourceDir = path.join(rootUri?.path, "/drawable");
+		var destinationDir = path.join(extensionUri.path, "/media/drawable")
+									
+		// To copy a folder or file  
+		fse.copySync(sourceDir, destinationDir)
+
 
 		const panel = vscode.window.createWebviewPanel(
 			AppPanel.viewType,
@@ -59,15 +70,18 @@ class AppPanel {
 			{
 				// Enable javascript in the webview
 				enableScripts: true,
+				
 
 				// And restrict the webview to only loading content from our extension's `media` directory.
-				localResourceRoots: [vscode.Uri.joinPath(extensionUri, 'media')]
+				localResourceRoots: [vscode.Uri.joinPath(extensionUri, 'media')],
+				
 			}
 		);
+
+	const updateWebview = () => {
 		
+
 		if (editor) {		
-			let workspaceFolder = vscode.workspace.getWorkspaceFolder(editor.document.uri);
-    		let rootUri = workspaceFolder?.uri	
 			const htmlPathOnDisk = vscode.Uri.joinPath(extensionUri, 'media', 'main.html');
 			const xml = fs.readFileSync(selection.path,'utf8')
 			
@@ -108,8 +122,6 @@ class AppPanel {
 
 					}
 					
-					
-
 				}
 
 				if(prop == "ImageView"){
@@ -127,7 +139,7 @@ class AppPanel {
 
 						let code = `<img src= "`+ img+ `" id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
 						layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"></img>`
-						xmlImg.push(code)					
+						xmlImg.push(code) 					
 					}
 
 				}if(prop == 'TextView'){
@@ -153,10 +165,11 @@ class AppPanel {
 						let layout_editor_absoluteX = ImageButton[ImgBprop]["_attributes"]["tools:layout_editor_absoluteX"].replace("dp", "px")
 						let layout_editor_absoluteY = ImageButton[ImgBprop]["_attributes"]["tools:layout_editor_absoluteY"].replace("dp", "px")
 						let background = ImageButton[ImgBprop]["_attributes"]["android:background"].replace(/@/gi , '/')
+						
 						let uri = vscode.Uri.joinPath(extensionUri, "media", background+".png");
-						let  img = panel.webview.asWebviewUri(uri);
+						let img = panel.webview.asWebviewUri(uri);
 
-						let code = `<img src= "`+ img+ `" id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+						let code = `<img src= "`+ img + `" id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
 						layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"></img>`
 						xmlTmgBtn.push(code)					
 					}
@@ -187,16 +200,31 @@ class AppPanel {
 			
 
 			// fs.writeFileSync(htmlPathOnDisk.path,html);
-		}
-		if (AppPanel.currentPanel) {
-			AppPanel.currentPanel._panel.reveal(column);
-			return;
-		}
 
-		// Otherwise, create a new panel.
+			// if (AppPanel.currentPanel) {
+			// 	AppPanel.currentPanel._panel.reveal(column);
+			// 	return;
+			// }
+	
+			// Otherwise, create a new panel.
+	
+			AppPanel.currentPanel = new AppPanel(panel, extensionUri);
+		}
 		
 
-		AppPanel.currentPanel = new AppPanel(panel, extensionUri);
+		
+	};   
+
+	const interval = setInterval(updateWebview, 500);
+
+	panel.onDidDispose(
+	  () => {
+		// When the panel is closed, cancel any future updates to the webview content
+		clearInterval(interval);
+	  })
+
+		
+
 	}
 
 	public static revive(panel: vscode.WebviewPanel, extensionUri: vscode.Uri) {
@@ -262,7 +290,7 @@ class AppPanel {
 	private _update() {
 		const webview = this._panel.webview;
 
-		this._panel.title = "Crossy";
+		this._panel.title = "Android Xml";
 
 		const htmlPathOnDisk =  vscode.Uri.joinPath(this._extensionUri, 'media', 'main.html');
 		let html = fs.readFileSync(htmlPathOnDisk.path).toString();
