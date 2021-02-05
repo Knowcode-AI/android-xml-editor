@@ -54,7 +54,7 @@ Choose the way to contribute and follow these steps:
 
 ### Help us to improve:
 * Find bugs and let us know by creating a [bug report](https://github.com/TotalCross/xml-editor/issues);
-* Create [features request](https://github.com/TotalCross/xml-editor/issues) to indicate the features you want to see working with [TotalCross](https://totalcross.com/);
+* Create [features request](https://github.com/TotalCross/xml-editor/issues) to indicate the features you want to see working in this plugin.
 
 ## :computer: Moderators
 * :bulb: [Allan C.M Lira](https://github.com/acmlira)
