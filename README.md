@@ -2,7 +2,7 @@
 <div align="center"> <a href="https://totalcross.com/" target="_blank"> <img src="https://github.com/TotalCross/totalcross/blob/master/totalcross.gif" alt="totalcross logo"/></a></div>
 
 <div align="center"> 
-<h1> xml_editor </h1> </div>
+<h1> XML-Editor </h1> </div>
 <p align="center"> Editor for XML files in VSCode </strong></em></p>
 
 <div align="center">
@@ -27,19 +27,42 @@ Extension that interprets the XML file - transforming it into HTML - and display
 
 ## :rotating_light: Requirements
 * VS Code 1.47+
-* Have an .xml file inside the `src/main/resources` directory
+* all images and media (assets) must be in this `src/main/resources/drawable` directory
 
-## :woman_technologist: Usage
+## :woman_technologist: Using XML-Editor plugin
 
-To start the development:
-1. Clone
-2. Open this project in VS Code 1.47+
-3. `npm install`
-4. `npm run watch` or `npm run compile`
-5. `F5` to start debugging
+1. Open your XML file on VSCode
+![](https://i.imgur.com/i7wzQFI.jpg)
 
+1. Press F1 or cmd + shift + p and search for XML Editor: Open.
+![](https://i.imgur.com/hrdNrwB.jpg)
 
-## `vscode` modules
+1. You can start making changes to your XML file and follow the result through the webview
+![](https://i.imgur.com/6dcCXu2.jpeg)
+
+## :construction: Contributing to xml-editor:
+Choose the way to contribute and follow these steps:
+
+### With code:
+1. Fork this repository.
+2. Create a branch: `git checkout -b <branch_name>`.
+3. Make your changes and commit them: `git commit -m '<commit_message>'`
+4. Push to the original branch: `git push origin <project_name>/<location>`
+5. Create the [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
+
+### Help us to improve:
+* Find bugs and let us know by creating a [bug report](https://github.com/TotalCross/xml-editor/issues);
+* Create [features request](https://github.com/TotalCross/xml-editor/issues) to indicate the features you want to see working with [TotalCross](https://totalcross.com/);
+
+## :loudspeaker: Contact
+* [Community](https://t.me/totalcrosscommunity);
+* [Twitter](https://twitter.com/totalcross);
+* [Linkedin](https://linkedin.com/company/totalcross);
+* [Instagram](https://www.instagram.com/totalcross/);
+* [Facebook](www.facebook.com/TotalCross/);
+* [Email](mailto:vaneska.sousa@totalcross.com).
+
+## :memo: `vscode` modules
 
 See more about the modules used:
 - [`window.createWebviewPanel`](https://code.visualstudio.com/api/references/vscode-api#window.createWebviewPanel)
