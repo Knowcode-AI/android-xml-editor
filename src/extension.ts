@@ -51,12 +51,15 @@ class AppPanel {
 
 		// If we already have a panel, show it.
 		const editor = vscode.window.activeTextEditor;
+		//@ts-ignore.
 		const selection = editor.document.uri;
+		//@ts-ignore.
 		let workspaceFolder = vscode.workspace.getWorkspaceFolder(editor.document.uri);
 		let rootUri = workspaceFolder?.uri	
 		
 		const fse = require('fs-extra');
-		var sourceDir = path.join(rootUri?.path, "/drawable");
+		//@ts-ignore.
+		var sourceDir = path.join(rootUri?.path, "src/main/resources/drawable");
 		var destinationDir = path.join(extensionUri.path, "/media/drawable")
 									
 		// To copy a folder or file  
