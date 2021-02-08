@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 
+
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('android-xml-editor.open', () => {
@@ -93,23 +94,36 @@ class AppPanel {
 
 			var json = convert.xml2json(xml, {compact: true, spaces: 4});
 			// var json = convert.xml2json(xml, {compact: false, spaces: 4});
-
-			//fs.writeFileSync(htmlPathOnDisk.path,"<p>\n"+json+"\n</p>");
 			json = JSON.parse(json);
+			//let ht = JSON.stringify(json["androidx.constraintlayout.widget.ConstraintLayout"])
+			//fs.writeFileSync(htmlPathOnDisk.path,"<p>\n"+ht+"\n</p>");
+			
 			let xmlinfo = [];
 			let xmlcode = [];
 			let xmlTmgBtn = [];
 			let xmlImg = [];
+			let xmlBtn = [];
+			//@ts-ignore
+			const delay = ms => new Promise(res => setTimeout(res, ms));
 	
 			for (var prop in json["androidx.constraintlayout.widget.ConstraintLayout"]) {
 				if(prop == "_attributes"){
-					let string = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]["android:background"].replace(/@drawable\//gi , '')
+					let string0 = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]["android:background"]
+					if(String(string0) == "undefined"){
+						vscode.window.showInformationMessage("android:background is not defined")
+						clearInterval(interval);
+
+					}
+					
+					let string = string0.replace(/@drawable\//gi , '')
+					
+
 					if(string.substr(0, 1) === "#") {
 						let layout_height = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]["android:layout_height"].replace("dp", "px")
 						let layout_width = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]["android:layout_width"].replace("dp", "px")
 						let background = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]["android:background"].replace(/@drawable\//gi , '')
 						
-						let resolution = `<div style="height: `+ layout_height +` ;background-color: `+ background+ `; width:` + layout_width +`;"> `
+						let resolution = `<div style=" position: absolute;left: 0px; top: 0px; height: `+ layout_height +` ;background-color: `+ background+ `; width:` + layout_width +`;"> `
 						xmlinfo.push(resolution)
 
 					}else{
@@ -120,17 +134,59 @@ class AppPanel {
 						let uri = vscode.Uri.joinPath(extensionUri, "media", background+".png");
 						let img = panel.webview.asWebviewUri(uri);
 						
-						let resolution = `<div style="height: `+ layout_height +` ;background: url('`+ img+ `'); width:` + layout_width +` ; background-position: center; background-size: cover;"> `
+						let resolution = `<div style=" position: absolute;left: 0px; top: 0px; height: `+ layout_height +` ;background: url('`+ img+ `'); width:` + layout_width +` ; background-position: center; background-size: cover;"> `
 						xmlinfo.push(resolution)
-
 					}
+
+					
 					
 				}
 
 				if(prop == "ImageView"){
 					let ImageView = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]
-					for (let IMGprop in ImageView){
+					const propOwn = Object.getOwnPropertyNames(ImageView);
+					let size = String(propOwn.length); 
 
+					if (size == "1"){
+				
+						for (let IMGprop in ImageView){
+							let id = ImageView[IMGprop]["android:id"].replace('@+id\/', '')
+							let layout_width = ImageView[IMGprop]["android:layout_width"].replace("dp", "px")
+							let layout_height = ImageView[IMGprop]["android:layout_height"].replace("dp", "px")
+							let layout_editor_absoluteX = ImageView[IMGprop]["tools:layout_editor_absoluteX"].replace("dp", "px")
+							let layout_editor_absoluteY = ImageView[IMGprop]["tools:layout_editor_absoluteY"].replace("dp", "px")
+							let background = ImageView[IMGprop]["android:background"].replace(/@/gi , '/')
+							let uri = vscode.Uri.joinPath(extensionUri, "media", background+".jpg");
+							let  img = panel.webview.asWebviewUri(uri);
+
+								// fs.readdir(destinationDir, function  (err, files) {
+								// 	//handling error
+								// 	if (err) {
+								// 		return console.log('Unable to scan directory: ' + err);
+								// 	} 
+								// 	//listing all files using forEach
+									
+								// 	for (let file of files) {
+										
+								// 		if(String(file)==background+"png"){
+								// 			vscode.window.showInformationMessage(String(file))
+								// 		}else{
+								// 			vscode.window.showInformationMessage(String(file+"1"))
+								// 		}
+										
+								// 	}
+									
+								// });
+							
+							let code = `<img src= "`+ img+ `" id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+							layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"></img>`
+							xmlImg.push(code) 					
+						}
+					
+
+					}else{
+
+					for (let IMGprop in ImageView){
 						let id = ImageView[IMGprop]["_attributes"]["android:id"].replace('@+id\/', '')
 						let layout_width = ImageView[IMGprop]["_attributes"]["android:layout_width"].replace("dp", "px")
 						let layout_height = ImageView[IMGprop]["_attributes"]["android:layout_height"].replace("dp", "px")
@@ -144,38 +200,155 @@ class AppPanel {
 						layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"></img>`
 						xmlImg.push(code) 					
 					}
+				}
 
-				}if(prop == 'TextView'){
+				}if(prop == "TextView"){
 					let TextView = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]
-					for (let Txtprop in TextView){
-						let textColor = TextView[Txtprop]["_attributes"]["android:textColor"]
-						let textSize = TextView[Txtprop]["_attributes"]["android:textSize"].replace("dp", "px")
-						let text = TextView[Txtprop]["_attributes"]["android:text"]
-						let layout_editor_absoluteX = TextView[Txtprop]["_attributes"]["tools:layout_editor_absoluteX"].replace("dp", "px")
-						let layout_editor_absoluteY = TextView[Txtprop]["_attributes"]["tools:layout_editor_absoluteY"].replace("dp", "px")
-
-						let code = `<p style="position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
-						layout_editor_absoluteY + `; color:`+ textColor +`; font-size:`+ textSize + `;">` +text+`</p>`
-						xmlcode.push(code)
+					const propOwn = Object.getOwnPropertyNames(TextView);
+					let size = String(propOwn.length);
+					if(size=="1"){
+						for (let Txtprop in TextView){
+							let textStyle = TextView[Txtprop]["android:textStyle"]
+							let gravity = TextView[Txtprop]["android:gravity"]
+							let textColor = TextView[Txtprop]["android:textColor"]
+							let textSize = TextView[Txtprop]["android:textSize"].replace("dp", "px")
+							let text = TextView[Txtprop]["android:text"]
+							let layout_width = TextView[Txtprop]["android:layout_width"].replace("dp", "px")
+							let layout_height = TextView[Txtprop]["android:layout_height"].replace("dp", "px")
+							let layout_editor_absoluteX = TextView[Txtprop]["tools:layout_editor_absoluteX"].replace("dp", "px")
+							let layout_editor_absoluteY = TextView[Txtprop]["tools:layout_editor_absoluteY"].replace("dp", "px")
+	
+							if(String(textStyle) == "undefined" && String(gravity) == "undefined" ){
+								let code = `<p style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; margin-top: auto; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;">` +text+`</p>`
+								xmlcode.push(code)	
+							}else if(String(textStyle) != "undefined" && String(gravity) == "undefined" ){
+								let code = `<p style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; font-weight:`+ textStyle +`; margin-top: auto; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;">` +text+`</p>`
+								xmlcode.push(code)
+							}else if(String(textStyle) == "undefined" && String(gravity) != "undefined" ){
+								let code = `<p style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; text-align:`+ gravity +`; margin-top: auto; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;">` +text+`</p>`
+								xmlcode.push(code)
+							}else if(String(textStyle) != "undefined" && String(gravity) != "undefined" ){
+								let code = `<p style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; font-weight:`+ textStyle +`; text-align:`+ gravity +`; margin-top: auto; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;">` +text+`</p>`
+								xmlcode.push(code)
+							}
+					}
+	
+					}else{
+						for (let Txtprop in TextView){
+							let textStyle = TextView[Txtprop]["_attributes"]["android:textStyle"]
+							let gravity = TextView[Txtprop]["_attributes"]["android:gravity"]
+							let textColor = TextView[Txtprop]["_attributes"]["android:textColor"]
+							let textSize = TextView[Txtprop]["_attributes"]["android:textSize"].replace("dp", "px")
+							let text = TextView[Txtprop]["_attributes"]["android:text"]
+							let layout_width = TextView[Txtprop]["_attributes"]["android:layout_width"].replace("dp", "px")
+							let layout_height = TextView[Txtprop]["_attributes"]["android:layout_height"].replace("dp", "px")
+							let layout_editor_absoluteX = TextView[Txtprop]["_attributes"]["tools:layout_editor_absoluteX"].replace("dp", "px")
+							let layout_editor_absoluteY = TextView[Txtprop]["_attributes"]["tools:layout_editor_absoluteY"].replace("dp", "px")
+	
+							if(String(textStyle) == "undefined" && String(gravity) == "undefined" ){
+								let code = `<p style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; margin-top: auto; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;">` +text+`</p>`
+								xmlcode.push(code)	
+							}else if(String(textStyle) != "undefined" && String(gravity) == "undefined" ){
+								let code = `<p style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; font-weight:`+ textStyle +`; margin-top: auto; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;">` +text+`</p>`
+								xmlcode.push(code)
+							}else if(String(textStyle) == "undefined" && String(gravity) != "undefined" ){
+								let code = `<p style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; text-align:`+ gravity +`; margin-top: auto; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;">` +text+`</p>`
+								xmlcode.push(code)
+							}else if(String(textStyle) != "undefined" && String(gravity) != "undefined" ){
+								let code = `<p style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; font-weight:`+ textStyle +`; text-align:`+ gravity +`; margin-top: auto; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;">` +text+`</p>`
+								xmlcode.push(code)
+							}
+					}
+	
 					}
 
 				}if(prop == "ImageButton"){
 					let ImageButton = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]
-					for (let ImgBprop in ImageButton){
-						let id = ImageButton[ImgBprop]["_attributes"]["android:id"].replace('@+id\/', '')
-						let layout_width = ImageButton[ImgBprop]["_attributes"]["android:layout_width"].replace("dp", "px")
-						let layout_height = ImageButton[ImgBprop]["_attributes"]["android:layout_height"].replace("dp", "px")
-						let layout_editor_absoluteX = ImageButton[ImgBprop]["_attributes"]["tools:layout_editor_absoluteX"].replace("dp", "px")
-						let layout_editor_absoluteY = ImageButton[ImgBprop]["_attributes"]["tools:layout_editor_absoluteY"].replace("dp", "px")
-						let background = ImageButton[ImgBprop]["_attributes"]["android:background"].replace(/@/gi , '/')
-						
-						let uri = vscode.Uri.joinPath(extensionUri, "media", background+".png");
-						let img = panel.webview.asWebviewUri(uri);
+					const propOwn = Object.getOwnPropertyNames(ImageButton);
+					let size = String(propOwn.length);
+					if(size=="1"){
+						for (let ImgBprop in ImageButton){
+							let id = ImageButton[ImgBprop]["android:id"].replace('@+id\/', '')
+							let layout_width = ImageButton[ImgBprop]["android:layout_width"].replace("dp", "px")
+							let layout_height = ImageButton[ImgBprop]["android:layout_height"].replace("dp", "px")
+							let layout_editor_absoluteX = ImageButton[ImgBprop]["tools:layout_editor_absoluteX"].replace("dp", "px")
+							let layout_editor_absoluteY = ImageButton[ImgBprop]["tools:layout_editor_absoluteY"].replace("dp", "px")
+							let background = ImageButton[ImgBprop]["android:background"].replace(/@/gi , '/')
+							
+							let uri = vscode.Uri.joinPath(extensionUri, "media", background+".png");
+							let img = panel.webview.asWebviewUri(uri);
+	
+							let code = `<img src= "`+ img + `" id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+							layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"></img>`
+							xmlTmgBtn.push(code)					
+						}
 
-						let code = `<img src= "`+ img + `" id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
-						layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"></img>`
-						xmlTmgBtn.push(code)					
+					}else{
+						for (let ImgBprop in ImageButton){
+							let id = ImageButton[ImgBprop]["_attributes"]["android:id"].replace('@+id\/', '')
+							let layout_width = ImageButton[ImgBprop]["_attributes"]["android:layout_width"].replace("dp", "px")
+							let layout_height = ImageButton[ImgBprop]["_attributes"]["android:layout_height"].replace("dp", "px")
+							let layout_editor_absoluteX = ImageButton[ImgBprop]["_attributes"]["tools:layout_editor_absoluteX"].replace("dp", "px")
+							let layout_editor_absoluteY = ImageButton[ImgBprop]["_attributes"]["tools:layout_editor_absoluteY"].replace("dp", "px")
+							let background = ImageButton[ImgBprop]["_attributes"]["android:background"].replace(/@/gi , '/')
+							
+							let uri = vscode.Uri.joinPath(extensionUri, "media", background+".png");
+							let img = panel.webview.asWebviewUri(uri);
+	
+							let code = `<img src= "`+ img + `" id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+							layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"></img>`
+							xmlTmgBtn.push(code)					
+						}
 					}
+					
+				}
+				if(prop == "Button"){
+					let Button = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]
+					const propOwn = Object.getOwnPropertyNames(Button);
+					let size = String(propOwn.length);
+					if(size=="1"){
+						for (let Bprop in Button){
+							let id = Button[Bprop]["android:id"].replace('@+id\/', '')
+							let layout_width = Button[Bprop]["android:layout_width"].replace("dp", "px")
+							let layout_height = Button[Bprop]["android:layout_height"].replace("dp", "px")
+							let layout_editor_absoluteX = Button[Bprop]["tools:layout_editor_absoluteX"].replace("dp", "px")
+							let layout_editor_absoluteY = Button[Bprop]["tools:layout_editor_absoluteY"].replace("dp", "px")
+							let background = Button[Bprop]["android:background"].replace(/@/gi , '/')
+							
+							let uri = vscode.Uri.joinPath(extensionUri, "media", background+".png");
+							let img = panel.webview.asWebviewUri(uri);
+	
+							let code = `<img src= "`+ img + `" id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+							layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"></img>`
+							xmlBtn.push(code)					
+						}
+					}else{
+						for (let Bprop in Button){
+							let id = Button[Bprop]["_attributes"]["android:id"].replace('@+id\/', '')
+							let layout_width = Button[Bprop]["_attributes"]["android:layout_width"].replace("dp", "px")
+							let layout_height = Button[Bprop]["_attributes"]["android:layout_height"].replace("dp", "px")
+							let layout_editor_absoluteX = Button[Bprop]["_attributes"]["tools:layout_editor_absoluteX"].replace("dp", "px")
+							let layout_editor_absoluteY = Button[Bprop]["_attributes"]["tools:layout_editor_absoluteY"].replace("dp", "px")
+							let background = Button[Bprop]["_attributes"]["android:background"].replace(/@/gi , '/')
+							
+							let uri = vscode.Uri.joinPath(extensionUri, "media", background+".png");
+							let img = panel.webview.asWebviewUri(uri);
+	
+							let code = `<img src= "`+ img + `" id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+							layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"></img>`
+							xmlBtn.push(code)					
+						}
+						
+					}
+					
 				}
 				
 			}
@@ -186,10 +359,11 @@ class AppPanel {
 			<meta charset="UTF-8"/>
 			<title>Document</title>
 			</head>
-			<body>` + xmlinfo.join('')
-			+xmlcode.join('')+
-			xmlTmgBtn.join('')+
+			<body>` + xmlinfo.join('')+
 			xmlImg.join('') +
+			xmlcode.join('')+
+			xmlTmgBtn.join('')+
+			xmlBtn.join('')+
 			`</div></body>
 			</html>`
 
@@ -202,7 +376,7 @@ class AppPanel {
             // ***********
 			
 
-			// fs.writeFileSync(htmlPathOnDisk.path,html);
+			//fs.writeFileSync(htmlPathOnDisk.path,html);
 
 			// if (AppPanel.currentPanel) {
 			// 	AppPanel.currentPanel._panel.reveal(column);
