@@ -60,12 +60,42 @@ class AppPanel {
 		
 		const fse = require('fs-extra');
 		//@ts-ignore.
-		var sourceDir = path.join(rootUri?.path, "src/main/resources/drawable");
+		var sourceDir = path.join(rootUri?.path, "src/main/resources/drawable")
 		var destinationDir = path.join(extensionUri.path, "/media/drawable")
-									
+		fs.rmdirSync(destinationDir, { recursive: true });
+		
 		// To copy a folder or file  
 		fse.copySync(sourceDir, destinationDir)
 
+		const Jimp = require("jimp")
+
+
+		fs.readdir(destinationDir, function  (err, files) {
+			//handling error
+			if (err) {
+				return console.log('Unable to scan directory: ' + err);
+			} 
+			//listing all files using forEach
+			for (let file of files) {
+				//@ts-ignore
+				if(file.match(".jpg")){
+					//@ts-ignore
+					Jimp.read(destinationDir+"\/"+file, function (err, image) {
+						if (err) {
+						  console.log(err)
+						} else {
+						  image.write(destinationDir+"\/"+file.replace('.jpg','.png'))
+						  fs.unlink(path.join(destinationDir, file), err => {
+							if (err) throw err;
+						  });
+						}
+					  })
+					
+				}
+				
+			}
+			
+		});
 
 		const panel = vscode.window.createWebviewPanel(
 			AppPanel.viewType,
@@ -82,9 +112,8 @@ class AppPanel {
 			}
 		);
 
-	const updateWebview = () => {
+	const updateWebview = async() => {
 		
-
 		if (editor) {		
 			const htmlPathOnDisk = vscode.Uri.joinPath(extensionUri, 'media', 'main.html');
 			const xml = fs.readFileSync(selection.path,'utf8')
@@ -103,19 +132,21 @@ class AppPanel {
 			let xmlTmgBtn = [];
 			let xmlImg = [];
 			let xmlBtn = [];
-			//@ts-ignore
-			const delay = ms => new Promise(res => setTimeout(res, ms));
+			let xmlProg =[];
+			
 	
 			for (var prop in json["androidx.constraintlayout.widget.ConstraintLayout"]) {
 				if(prop == "_attributes"){
 					let string0 = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]["android:background"]
-					if(String(string0) == "undefined"){
-						vscode.window.showInformationMessage("android:background is not defined")
-						clearInterval(interval);
 
+					if(String(string0) == "undefined"){
+						let layout_height = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]["android:layout_height"].replace("dp", "px")
+						let layout_width = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]["android:layout_width"].replace("dp", "px")
+						let resolution = `<div style=" position: absolute;left: 0px; top: 0px; height: `+ layout_height +` ;background-color: #FFFFFF; width:` + layout_width +`;"> `
+						xmlinfo.push(resolution)
 					}
 					
-					let string = string0.replace(/@drawable\//gi , '')
+					let string = String(string0).replace(/@drawable\//gi , '')
 					
 
 					if(string.substr(0, 1) === "#") {
@@ -126,7 +157,7 @@ class AppPanel {
 						let resolution = `<div style=" position: absolute;left: 0px; top: 0px; height: `+ layout_height +` ;background-color: `+ background+ `; width:` + layout_width +`;"> `
 						xmlinfo.push(resolution)
 
-					}else{
+					}else if(string.substr(0, 1) === "\/"){
 
 						let layout_height = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]["android:layout_height"].replace("dp", "px")
 						let layout_width = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]["android:layout_width"].replace("dp", "px")
@@ -156,28 +187,8 @@ class AppPanel {
 							let layout_editor_absoluteX = ImageView[IMGprop]["tools:layout_editor_absoluteX"].replace("dp", "px")
 							let layout_editor_absoluteY = ImageView[IMGprop]["tools:layout_editor_absoluteY"].replace("dp", "px")
 							let background = ImageView[IMGprop]["android:background"].replace(/@/gi , '/')
-							let uri = vscode.Uri.joinPath(extensionUri, "media", background+".jpg");
+							let uri = vscode.Uri.joinPath(extensionUri, "media", background+".png");
 							let  img = panel.webview.asWebviewUri(uri);
-
-								// fs.readdir(destinationDir, function  (err, files) {
-								// 	//handling error
-								// 	if (err) {
-								// 		return console.log('Unable to scan directory: ' + err);
-								// 	} 
-								// 	//listing all files using forEach
-									
-								// 	for (let file of files) {
-										
-								// 		if(String(file)==background+"png"){
-								// 			vscode.window.showInformationMessage(String(file))
-								// 		}else{
-								// 			vscode.window.showInformationMessage(String(file+"1"))
-								// 		}
-										
-								// 	}
-									
-								// });
-							
 							let code = `<img src= "`+ img+ `" id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
 							layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"></img>`
 							xmlImg.push(code) 					
@@ -350,6 +361,50 @@ class AppPanel {
 					}
 					
 				}
+
+				if(prop == "ProgressBar"){
+					let ProgressBar = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]
+					const propOwn = Object.getOwnPropertyNames(ProgressBar);
+					let size = String(propOwn.length);
+					if(size=="1"){
+						for (let Bprop in ProgressBar){
+							
+							let id = ProgressBar[Bprop]["android:id"].replace('@+id\/', '')
+							let layout_width = ProgressBar[Bprop]["android:layout_width"].replace("dp", "px")
+							let layout_height = ProgressBar[Bprop]["android:layout_height"].replace("dp", "px")
+							let layout_editor_absoluteX = ProgressBar[Bprop]["tools:layout_editor_absoluteX"].replace("dp", "px")
+							let layout_editor_absoluteY = ProgressBar[Bprop]["tools:layout_editor_absoluteY"].replace("dp", "px")
+							let style = ProgressBar[Bprop]["style"]
+							if(String(style)== "?android:attr/progressBarStyle"){
+								let code = `<svg id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"><circle cx="50%" cy="50%" r="`+String(parseInt(layout_width)/3)+`" stroke="#428bca" stroke-width="20" fill="#000000" fill-opacity="0.0"/></svg>`
+								xmlProg.push(code)	
+
+							}
+								
+											
+						}
+					}else{
+						for (let Bprop in ProgressBar){
+							let id = ProgressBar[Bprop]["_attributes"]["android:id"].replace('@+id\/', '')
+							let layout_width = ProgressBar[Bprop]["_attributes"]["android:layout_width"].replace("dp", "px")
+							let layout_height = ProgressBar[Bprop]["_attributes"]["android:layout_height"].replace("dp", "px")
+							let layout_editor_absoluteX = ProgressBar[Bprop]["_attributes"]["tools:layout_editor_absoluteX"].replace("dp", "px")
+							let layout_editor_absoluteY = ProgressBar[Bprop]["_attributes"]["tools:layout_editor_absoluteY"].replace("dp", "px")
+							let style = ProgressBar[Bprop]["_attributes"]["style"]
+							
+							if(String(style)== "?android:attr/progressBarStyle"){
+								let code = `<svg id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"><circle cx="50%" cy="50%" r="`+String(parseInt(layout_width)/3)+`" stroke="#428bca" stroke-width="20" fill="#000000" fill-opacity="0.0"/></svg>`
+								xmlProg.push(code)	
+
+							}
+												
+						}
+						
+					}
+					
+				}
 				
 			}
 			
@@ -358,12 +413,28 @@ class AppPanel {
 			<head>
 			<meta charset="UTF-8"/>
 			<title>Document</title>
+			<style>
+				svg {
+				transform: rotate(-90deg);
+				stroke-dasharray: 800; /* (2PI * 40px) */
+				stroke-dashoffset: 800;
+				animation: offsettozero 2s linear forwards;
+			  }
+			  
+			  @keyframes offsettozero {
+				to {
+				  stroke-dashoffset: 0;
+				}
+			  }
+
+			</style>
 			</head>
 			<body>` + xmlinfo.join('')+
 			xmlImg.join('') +
-			xmlcode.join('')+
 			xmlTmgBtn.join('')+
 			xmlBtn.join('')+
+			xmlcode.join('')+
+			xmlProg.join('')+
 			`</div></body>
 			</html>`
 

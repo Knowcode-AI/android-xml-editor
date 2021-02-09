@@ -24,28 +24,8 @@
 				"title": "Open",
 				"category": "Android XML Editor"
 			}
-		],
-		"viewsContainers": {
-			"activitybar": [
-				{
-					"id": "android-xml-editor",
-					"title": "Android XML Editor",
-					"icon": "resources/android-xml-editor.svg"
-				}
-			]
-		},
-		"views": {
-			"android-xml-editor": [
-				{
-					"id": "android-xml-editor.dashboard",
-					"name": "Project"
-				},
-				{
-					"id": "android-xml-editor.quickAccess",
-					"name": "Quick Access"
-				}
-			]
-		}
+		]
+	
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
@@ -56,6 +36,7 @@
 	"dependencies": {
 		"fast-xml-parser": "^3.17.6",
 		"fs-extra": "^9.1.0",
+		"jimp": "^0.16.1",
 		"xml-js": "^1.6.11"
 	},
 	"devDependencies": {
