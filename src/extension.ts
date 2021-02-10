@@ -230,20 +230,20 @@ class AppPanel {
 							let layout_editor_absoluteY = TextView[Txtprop]["tools:layout_editor_absoluteY"].replace("dp", "px")
 	
 							if(String(textStyle) == "undefined" && String(gravity) == "undefined" ){
-								let code = `<p style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
-								layout_editor_absoluteY + `; margin-top: auto; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;">` +text+`</p>`
+								let code = `<p style="  font-family: 'Roboto', sans-serif; position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; margin-top: 1.2%; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;-webkit-transform: translateY( 0% );-moz-transform: translateY( 0% );transform: translateY( 0% );">` +text+`</p>`
 								xmlcode.push(code)	
 							}else if(String(textStyle) != "undefined" && String(gravity) == "undefined" ){
-								let code = `<p style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
-								layout_editor_absoluteY + `; font-weight:`+ textStyle +`; margin-top: auto; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;">` +text+`</p>`
+								let code = `<p style="  font-family: 'Roboto', sans-serif; position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; font-weight:`+ textStyle +`; margin-top: 1.2%; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;-webkit-transform: translateY( 0% );-moz-transform: translateY( 0% );transform: translateY( 0% );">` +text+`</p>`
 								xmlcode.push(code)
 							}else if(String(textStyle) == "undefined" && String(gravity) != "undefined" ){
-								let code = `<p style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
-								layout_editor_absoluteY + `; text-align:`+ gravity +`; margin-top: auto; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;">` +text+`</p>`
+								let code = `<p style="  font-family: 'Roboto', sans-serif; position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; text-align:`+ gravity +`; margin-top: 1.2%; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;-webkit-transform: translateY( 0% );-moz-transform: translateY( 0% );transform: translateY( 0% );">` +text+`</p>`
 								xmlcode.push(code)
 							}else if(String(textStyle) != "undefined" && String(gravity) != "undefined" ){
-								let code = `<p style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
-								layout_editor_absoluteY + `; font-weight:`+ textStyle +`; text-align:`+ gravity +`; margin-top: auto; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;">` +text+`</p>`
+								let code = `<p style="  font-family: 'Roboto', sans-serif; position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; font-weight:`+ textStyle +`; text-align:`+ gravity +`; margin-top: 1.2%; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;-webkit-transform: translateY( 0% );-moz-transform: translateY( 0% );transform: translateY( 0% );">` +text+`</p>`
 								xmlcode.push(code)
 							}
 					}
@@ -261,20 +261,20 @@ class AppPanel {
 							let layout_editor_absoluteY = TextView[Txtprop]["_attributes"]["tools:layout_editor_absoluteY"].replace("dp", "px")
 	
 							if(String(textStyle) == "undefined" && String(gravity) == "undefined" ){
-								let code = `<p style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
-								layout_editor_absoluteY + `; margin-top: auto; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;">` +text+`</p>`
+								let code = `<p style=" font-family: 'Roboto', sans-serif; position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; margin-top: 1.2%; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `; -webkit-transform: translateY( 0% );-moz-transform: translateY( 0% );transform: translateY( 0% );">` +text+`</p>`
 								xmlcode.push(code)	
 							}else if(String(textStyle) != "undefined" && String(gravity) == "undefined" ){
-								let code = `<p style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
-								layout_editor_absoluteY + `; font-weight:`+ textStyle +`; margin-top: auto; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;">` +text+`</p>`
+								let code = `<p style=" font-family: 'Roboto', sans-serif; position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; font-weight:`+ textStyle +`; margin-top: 1.2%; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;-webkit-transform: translateY( 0% );-moz-transform: translateY( 0% );transform: translateY( 0% );">` +text+`</p>`
 								xmlcode.push(code)
 							}else if(String(textStyle) == "undefined" && String(gravity) != "undefined" ){
-								let code = `<p style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
-								layout_editor_absoluteY + `; text-align:`+ gravity +`; margin-top: auto; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;">` +text+`</p>`
+								let code = `<p style=" font-family: 'Roboto', sans-serif; position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; text-align:`+ gravity +`; margin-top: 1.2%; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;-webkit-transform: translateY( 0% );-moz-transform: translateY( 0% );transform: translateY( 0% );">` +text+`</p>`
 								xmlcode.push(code)
 							}else if(String(textStyle) != "undefined" && String(gravity) != "undefined" ){
-								let code = `<p style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
-								layout_editor_absoluteY + `; font-weight:`+ textStyle +`; text-align:`+ gravity +`; margin-top: auto; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;">` +text+`</p>`
+								let code = `<p style=" font-family: 'Roboto', sans-serif; position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+								layout_editor_absoluteY + `; font-weight:`+ textStyle +`; text-align:`+ gravity +`; margin-top: 1.2%; margin-bottom: auto; color:`+ textColor +`; font-size:`+ textSize + `; width:`+ layout_width + `; height:`+ layout_height + `;-webkit-transform: translateY( 0% );-moz-transform: translateY( 0% );transform: translateY( 0% );">` +text+`</p>`
 								xmlcode.push(code)
 							}
 					}
@@ -371,13 +371,15 @@ class AppPanel {
 							
 							let id = ProgressBar[Bprop]["android:id"].replace('@+id\/', '')
 							let layout_width = ProgressBar[Bprop]["android:layout_width"].replace("dp", "px")
+							let indeterminateTint = ProgressBar[Bprop]["android:indeterminateTint"]
 							let layout_height = ProgressBar[Bprop]["android:layout_height"].replace("dp", "px")
 							let layout_editor_absoluteX = ProgressBar[Bprop]["tools:layout_editor_absoluteX"].replace("dp", "px")
 							let layout_editor_absoluteY = ProgressBar[Bprop]["tools:layout_editor_absoluteY"].replace("dp", "px")
 							let style = ProgressBar[Bprop]["style"]
+							
 							if(String(style)== "?android:attr/progressBarStyle"){
 								let code = `<svg id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
-								layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"><circle cx="50%" cy="50%" r="`+String(parseInt(layout_width)/3)+`" stroke="#428bca" stroke-width="20" fill="#000000" fill-opacity="0.0"/></svg>`
+								layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"><circle cx="50%" cy="50%" r="`+String(parseInt(layout_width)/3)+`" stroke="`+indeterminateTint+`" stroke-width="20" fill="#000000" fill-opacity="0.0"/></svg>`
 								xmlProg.push(code)	
 
 							}
@@ -391,11 +393,12 @@ class AppPanel {
 							let layout_height = ProgressBar[Bprop]["_attributes"]["android:layout_height"].replace("dp", "px")
 							let layout_editor_absoluteX = ProgressBar[Bprop]["_attributes"]["tools:layout_editor_absoluteX"].replace("dp", "px")
 							let layout_editor_absoluteY = ProgressBar[Bprop]["_attributes"]["tools:layout_editor_absoluteY"].replace("dp", "px")
+							let indeterminateTint = ProgressBar[Bprop]["android:indeterminateTint"]
 							let style = ProgressBar[Bprop]["_attributes"]["style"]
 							
 							if(String(style)== "?android:attr/progressBarStyle"){
 								let code = `<svg id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
-								layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"><circle cx="50%" cy="50%" r="`+String(parseInt(layout_width)/3)+`" stroke="#428bca" stroke-width="20" fill="#000000" fill-opacity="0.0"/></svg>`
+								layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"><circle cx="50%" cy="50%" r="`+String(parseInt(layout_width)/3)+`" stroke="`+indeterminateTint+`" stroke-width="20" fill="#000000" fill-opacity="0.0"/></svg>`
 								xmlProg.push(code)	
 
 							}
@@ -411,6 +414,7 @@ class AppPanel {
 			let main = `<!DOCTYPE html>
 			<html>
 			<head>
+			<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 			<meta charset="UTF-8"/>
 			<title>Document</title>
 			<style>
