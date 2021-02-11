@@ -46,6 +46,10 @@ class AppPanel {
 	private _disposables: vscode.Disposable[] = [];
 
 	public static createOrShow(extensionUri: vscode.Uri) {
+		vscode.commands.executeCommand('workbench.action.moveEditorToRightGroup')
+		
+		
+		
 		const column = vscode.window.activeTextEditor
 			? vscode.window.activeTextEditor.viewColumn
 			: undefined;
@@ -98,6 +102,7 @@ class AppPanel {
 		});
 
 		const panel = vscode.window.createWebviewPanel(
+			
 			AppPanel.viewType,
 			'App',
 			column || vscode.ViewColumn.One,
@@ -133,6 +138,7 @@ class AppPanel {
 			let xmlImg = [];
 			let xmlBtn = [];
 			let xmlProg =[];
+			let xmlSwt =[];
 			
 	
 			for (var prop in json["androidx.constraintlayout.widget.ConstraintLayout"]) {
@@ -408,6 +414,39 @@ class AppPanel {
 					}
 					
 				}
+
+				if(prop == "Switch"){
+					let Switch = json["androidx.constraintlayout.widget.ConstraintLayout"][prop]
+					const propOwn = Object.getOwnPropertyNames(Switch);
+					let size = String(propOwn.length);
+					if(size=="1"){
+						for (let Sprop in Switch){
+							
+							let id = Switch[Sprop]["android:id"].replace('@+id\/', '')
+							let layout_width = Switch[Sprop]["android:layout_width"].replace("dp", "px")
+							let layout_height = Switch[Sprop]["android:layout_height"].replace("dp", "px")
+							let layout_editor_absoluteX = Switch[Sprop]["tools:layout_editor_absoluteX"].replace("dp", "px")
+							let layout_editor_absoluteY = Switch[Sprop]["tools:layout_editor_absoluteY"].replace("dp", "px")
+							let code = `<label class="switch" id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+							layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"><input type="checkbox"><span class="slider round"></span></label>`
+							xmlSwt.push(code)	
+					
+						}
+					}else{
+						for (let Sprop in Switch){
+							let id = Switch[Sprop]["_attributes"]["android:id"].replace('@+id\/', '')
+							let layout_width = Switch[Sprop]["_attributes"]["android:layout_width"].replace("dp", "px")
+							let layout_height = Switch[Sprop]["_attributes"]["android:layout_height"].replace("dp", "px")
+							let layout_editor_absoluteX = Switch[Sprop]["_attributes"]["tools:layout_editor_absoluteX"].replace("dp", "px")
+							let layout_editor_absoluteY = Switch[Sprop]["_attributes"]["tools:layout_editor_absoluteY"].replace("dp", "px")
+							let code = `<label class="switch" id="`+ id +`" style=" position: absolute;left: `+ layout_editor_absoluteX + `; top: ` +
+							layout_editor_absoluteY + `; width:`+ layout_width + `; height:`+ layout_height + `;"><input type="checkbox"><span class="slider round"></span></label>`
+							xmlSwt.push(code)
+						}
+						
+					}
+					
+				}
 				
 			}
 			
@@ -431,6 +470,69 @@ class AppPanel {
 				}
 			  }
 
+			  .switch {
+				position: relative;
+				display: inline-block;
+				width: 60px;
+				height: 34px;
+			  }
+			  
+			  .switch input { 
+				opacity: 0;
+				width: 0;
+				height: 0;
+			  }
+			  
+			  .slider {
+				position: absolute;
+				cursor: pointer;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: #ccc;
+				-webkit-transition: .4s;
+				transition: .4s;
+			  }
+			  
+			  .slider:before {
+				position: absolute;
+				content: "";
+				top: 0; bottom: 0;
+				left: 0; right: 0;
+				margin-left: 10%;
+				margin-top: auto;
+				margin-bottom: auto;
+				height: 70%;
+				width: 38%;
+				background-color: white;
+				-webkit-transition: .4s;
+				transition: .4s;
+			  }
+			  
+			  input:checked + .slider {
+				background-color: #2196F3;
+			  }
+			  
+			  input:focus + .slider {
+				box-shadow: 0 0 1px #2196F3;
+			  }
+			  
+			  input:checked + .slider:before {
+				-webkit-transform: translateX(26px);
+				-ms-transform: translateX(26px);
+				transform: translateX(26px);
+			  }
+			  
+			  /* Rounded sliders */
+			  .slider.round {
+				border-radius: 34px;
+			  }
+			  
+			  .slider.round:before {
+				border-radius: 50%;
+			  }
+
 			</style>
 			</head>
 			<body>` + xmlinfo.join('')+
@@ -439,6 +541,7 @@ class AppPanel {
 			xmlBtn.join('')+
 			xmlcode.join('')+
 			xmlProg.join('')+
+			xmlSwt.join('')+
 			`</div></body>
 			</html>`
 
@@ -459,7 +562,6 @@ class AppPanel {
 			// }
 	
 			// Otherwise, create a new panel.
-	
 			AppPanel.currentPanel = new AppPanel(panel, extensionUri);
 		}
 		
@@ -541,6 +643,7 @@ class AppPanel {
 
 	private _update() {
 		const webview = this._panel.webview;
+		
 
 		this._panel.title = "Android Xml";
 

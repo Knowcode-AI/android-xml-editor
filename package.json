@@ -1,6 +1,7 @@
 {
 	"name": "android-xml-editor",
 	"description": "Android XML Editor",
+	"icon": "android_xml.jpg",
 	"version": "0.0.1",
 	"publisher": "TotalCross",
 	"engines": {
@@ -18,13 +19,62 @@
 	},
 	"main": "./out/extension.js",
 	"contributes": {
+
+		"configurationDefaults": {
+
+		"[xml]": {
+		  "editor.mouseWheelZoom": true
+		}
+		
+		
+	  },
 		"commands": [
 			{
 				"command": "android-xml-editor.open",
 				"title": "Open",
 				"category": "Android XML Editor"
 			}
-		]
+			
+		],
+		"keybindings": [
+            {
+                "command": "workbench.action.decreaseViewSize",
+                "key": "ctrl+alt+l",
+                "mac": "shift+cmd+f"
+            },
+            {
+                "command": "workbench.action.increaseViewSize",
+                "key": "ctrl+alt+f",
+                "mac": "shift+cmd+l"
+            },
+
+			{
+				"key": "ctrl+=",
+				"command": "editor.action.fontZoomIn"
+			  },
+			  {
+				"key": "ctrl+alt+=",
+				"command": "workbench.action.zoomIn"
+			  },
+		
+			  {
+				"key": "ctrl+-",
+				"command": "editor.action.fontZoomOut"
+			  },
+			  {
+				"key": "ctrl+alt+-",
+				"command": "workbench.action.zoomOut"
+			  },
+		
+			  {
+				"key": "ctrl+0",
+				"command": "editor.action.fontZoomReset"
+			  },
+			  {
+				"key": "ctrl+alt+0",
+				"command": "workbench.action.zoomReset"
+			  }
+        ]
 	
 	},
 	"scripts": {
