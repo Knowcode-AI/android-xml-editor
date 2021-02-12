@@ -25,8 +25,8 @@ Extension that interprets the XML file - transforming it into HTML - and display
 
 ## :rotating_light: Requirements
 * VS Code 1.47+;
-* all images and media (assets) must be in this `src/main/resources/drawable` directory;
-* For now, the plugin only support `content-layout`.
+* All images and media (assets) must be in this `src/main/resources/drawable` directory;
+* **As this is an alpha version, the plugin only supports `content-layout`**.
 
 ## :woman_technologist: Using Android-XML-Editor plugin
 
