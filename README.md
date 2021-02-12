@@ -18,17 +18,17 @@
 Extension that interprets the XML file - transforming it into HTML - and displays it in a web view in VSCode, which is lighter than Android Studio and InteliJ.
 
 
-## :sparkles: Features
+## ✨ Features
 * Read and XML file;
 * Displaying the XML file in the webview;
 * Real-time webview editing.
 
-## :rotating_light: Requirements
+## 🚨 Requirements
 * VS Code 1.47+;
 * All images and media (assets) must be in this `src/main/resources/drawable` directory;
 * **As this is an alpha version, the plugin only supports `content-layout`**.
 
-## :woman_technologist: Using Android-XML-Editor plugin
+## 👩‍💻 Using Android-XML-Editor plugin
 
 1. Open your XML file on VSCode
 ![](https://i.imgur.com/i7wzQFI.jpg)
@@ -39,7 +39,7 @@ Extension that interprets the XML file - transforming it into HTML - and display
 1. You can start making changes to your XML file and follow the result through the webview
 ![](https://i.imgur.com/6dcCXu2.jpeg)
 
-## :construction: Contributing to Android-XML-Editor:
+## 🚧 Contributing to Android-XML-Editor:
 Choose the way to contribute and follow these steps:
 
 ### With code:
@@ -54,7 +54,7 @@ Choose the way to contribute and follow these steps:
 * Create [features request](https://github.com/TotalCross/android-xml-editor/issues) to indicate the features you want to see working in this plugin;
 * Join [GUI for embedded community](https://t.me/guiembedded) 
 
-## :computer: Moderators
+## 💻 Moderators
 * :bulb: [Allan C.M Lira](https://github.com/acmlira)
 * :man_technologist: [Mateus Lima](https://github.com/mateuslimax22)
 * :man_technologist: [Patrick Lima](https://github.com/pattrickx)
@@ -68,7 +68,7 @@ TotalCross is a technology company aimed at **facilitating the development of Gr
 Today totalcross is moderator of the [Embedded GUI community](https://t.me/guiembedded) and sponsor of [TotalCross SDK](totalcross.com).
 
 
-## :loudspeaker: Contact
+## 📢 Contact
 * [Community](https://t.me/guiembedded);
 * [Twitter](https://twitter.com/totalcross);
 * [Linkedin](https://linkedin.com/company/totalcross);
@@ -76,7 +76,7 @@ Today totalcross is moderator of the [Embedded GUI community](https://t.me/guiem
 * [Facebook](www.facebook.com/TotalCross/);
 * [Email](mailto:vaneska.sousa@totalcross.com).
 
-## :memo: `vscode` modules
+## 📝 `vscode` modules
 
 See more about the modules used:
 - [`window.createWebviewPanel`](https://code.visualstudio.com/api/references/vscode-api#window.createWebviewPanel)
