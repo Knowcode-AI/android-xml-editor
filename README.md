@@ -1,25 +1,21 @@
 
-<div align="center"> <a href="https://totalcross.com/" target="_blank"> <img src="https://github.com/TotalCross/totalcross/blob/master/totalcross.gif" alt="totalcross logo"/></a></div>
+<div align="center"> <img src="https://i.imgur.com/zcQ1Z6r.png" alt="android and totalcross logo together" width="150" height="150"/> </div>
 
 <div align="center"> 
 <h1> Android-XML-Editor </h1> </div>
-<p align="center"> Editor for XML files in VSCode </strong></em></p>
+<p align="center"> Editor for Android XML files in VSCode powered by TotalCross </strong></em></p>
 
 <div align="center">
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="http://learn.totalcross.com/" target="_blank">Docs</a>
-  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="https://medium.com/totalcross-community" target="_blank">Blog</a>
-  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="https://forum.totalcross.com" target="_blank">Forum</a>
+  <a href="https://developer.android.com/guide/topics/ui" target="_blank">Docs</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
   <a href="https://www.youtube.com/c/totalcross" target="_blank">Videos</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="https://totalcross.com/community/" target="_blank">Community</a>
+  <a href="https://t.me/guiembedded" target="_blank">GUI for Embedded community</a>
 </div>
 
 
-Extension that interprets the XML file - transforming it into HTML - and displays it in a web view in VSCode, which is lighter than Android Studio and InteliJ
+Extension that interprets the XML file - transforming it into HTML - and displays it in a web view in VSCode, which is lighter than Android Studio and InteliJ.
 
 
 ## :sparkles: Features
@@ -29,7 +25,8 @@ Extension that interprets the XML file - transforming it into HTML - and display
 
 ## :rotating_light: Requirements
 * VS Code 1.47+;
-* all images and media (assets) must be in this `src/main/resources/drawable` directory.
+* all images and media (assets) must be in this `src/main/resources/drawable` directory;
+* For now, the plugin only support `content-layout`.
 
 ## :woman_technologist: Using Android-XML-Editor plugin
 
@@ -62,6 +59,13 @@ Choose the way to contribute and follow these steps:
 * :man_technologist: [Patrick Lima](https://github.com/pattrickx)
 * :books: [Iaggo Quezado](https://github.com/Iaggoq)
 * :books: [Vaneska Sousa](https://github.com/VaneskaSousa)
+
+## 🤔 About TotalCross
+
+TotalCross is a technology company aimed at **facilitating the development of Graphical User Interfaces for embedded systems** offering services, computer vision technology for GUI construction and, mainly, **supporting Open Source** technologies and their communities.
+
+Today totalcross is moderator of the [Embedded GUI community](https://t.me/guiembedded) and sponsor of [TotalCross SDK](totalcross.com).
+
 
 ## :loudspeaker: Contact
 * [Community](https://t.me/totalcrosscommunity);
