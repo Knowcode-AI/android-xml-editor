@@ -51,7 +51,8 @@ Choose the way to contribute and follow these steps:
 
 ### Help us to improve:
 * Find bugs and let us know by creating a [bug report](https://github.com/TotalCross/android-xml-editor/issues);
-* Create [features request](https://github.com/TotalCross/android-xml-editor/issues) to indicate the features you want to see working in this plugin.
+* Create [features request](https://github.com/TotalCross/android-xml-editor/issues) to indicate the features you want to see working in this plugin;
+* Join [GUI for embedded community](https://t.me/guiembedded) 
 
 ## :computer: Moderators
 * :bulb: [Allan C.M Lira](https://github.com/acmlira)
@@ -62,13 +63,13 @@ Choose the way to contribute and follow these steps:
 
 ## 🤔 About TotalCross
 
-TotalCross is a technology company aimed at **facilitating the development of Graphical User Interfaces for embedded systems** offering services, computer vision technology for GUI construction and, mainly, **supporting Open Source** technologies and their communities.
+TotalCross is a technology company aimed at **facilitating the development of Graphical User Interfaces for embedded systems** offering services, [computer vision technology](http://yourapp.totalcross.com/knowcode-app) for GUI construction and, mainly, **supporting Open Source** technologies and their communities.
 
 Today totalcross is moderator of the [Embedded GUI community](https://t.me/guiembedded) and sponsor of [TotalCross SDK](totalcross.com).
 
 
 ## :loudspeaker: Contact
-* [Community](https://t.me/totalcrosscommunity);
+* [Community](https://t.me/guiembedded);
 * [Twitter](https://twitter.com/totalcross);
 * [Linkedin](https://linkedin.com/company/totalcross);
 * [Instagram](https://www.instagram.com/totalcross/);
