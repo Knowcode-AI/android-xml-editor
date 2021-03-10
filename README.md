@@ -12,11 +12,15 @@
   <a href="https://www.youtube.com/c/totalcross" target="_blank">Videos</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
   <a href="https://t.me/guiembedded" target="_blank">GUI for Embedded community</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="https://github.com/Knowcode-AI/android-xml-editor/" target="_blank">Source Code</a>
 </div>
 
 
-Extension that interprets the XML file - transforming it into HTML - and displays it in a web view in VSCode, which is lighter than Android Studio and InteliJ.
+Extension that interprets the XML file - transforming it into HTML - and displays it in a web view in VSCode, which is lighter than Android Studio and InteliJ. You can see the [source code on GitHub](https://github.com/Knowcode-AI/android-xml-editor/).
 
+## 🤘 Suggestion
+- Download the [TotalCross SDK Plugin](https://marketplace.visualstudio.com/items?itemName=totalcross.vscode-totalcross) for GUI construction;
 
 ## ✨ Features
 * Read and XML file;
@@ -50,23 +54,22 @@ Choose the way to contribute and follow these steps:
 5. Create the [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
 ### Help us to improve:
-* Find bugs and let us know by creating a [bug report](https://github.com/TotalCross/android-xml-editor/issues);
-* Create [features request](https://github.com/TotalCross/android-xml-editor/issues) to indicate the features you want to see working in this plugin;
+* Find bugs and let us know by creating a [bug report](https://github.com/Knowcode-AI/android-xml-editor/issues);
+* Create [features request](https://github.com/Knowcode-AI/android-xml-editor/issues) to indicate the features you want to see working in this plugin;
 * Join [GUI for embedded community](https://t.me/guiembedded) 
 
 ## 💻 Moderators
-* :bulb: [Allan C.M Lira](https://github.com/acmlira)
-* :man_technologist: [Mateus Lima](https://github.com/mateuslimax22)
-* :man_technologist: [Patrick Lima](https://github.com/pattrickx)
-* :books: [Iaggo Quezado](https://github.com/Iaggoq)
-* :books: [Vaneska Sousa](https://github.com/VaneskaSousa)
+* 💡 [Allan C.M Lira](https://github.com/acmlira)
+* 👨‍💻 [Mateus Lima](https://github.com/mateuslimax22)
+* 👨‍💻 [Patrick Lima](https://github.com/pattrickx)
+* 📚 [Iaggo Quezado](https://github.com/Iaggoq)
+* 📚 [Vaneska Sousa](https://github.com/VaneskaSousa)
 
 ## 🤔 About TotalCross
 
 TotalCross is a technology company aimed at **facilitating the development of Graphical User Interfaces for embedded systems** offering services, [computer vision technology](http://yourapp.totalcross.com/knowcode-app) for GUI construction and, mainly, **supporting Open Source** technologies and their communities.
 
 Today totalcross is moderator of the [Embedded GUI community](https://t.me/guiembedded) and sponsor of [TotalCross SDK](totalcross.com).
-
 
 ## 📢 Contact
 * [Community](https://t.me/guiembedded);
