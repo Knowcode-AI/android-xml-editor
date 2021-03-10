@@ -19,6 +19,8 @@
 
 Extension that interprets the XML file - transforming it into HTML - and displays it in a web view in VSCode, which is lighter than Android Studio and InteliJ. You can see the [source code on GitHub](https://github.com/Knowcode-AI/android-xml-editor/).
 
+## 🤘 Suggestion
+- Download the [TotalCross SDK Plugin](https://marketplace.visualstudio.com/items?itemName=totalcross.vscode-totalcross) for GUI construction;
 
 ## ✨ Features
 * Read and XML file;
