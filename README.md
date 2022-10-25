@@ -3,7 +3,7 @@
 
 <div align="center"> 
 <h1> Android-XML-Editor </h1> </div>
-<p align="center"> Editor for Android XML files in VSCode powered by TotalCross </strong></em></p>
+<p align="center">Fork of <a href=https://github.com/Knowcode-AI/android-xml-editor>Knowcode-AI/android-xml-editor</a> that works.<br>It consists in an editor for Android XML files in VSCode powered by TotalCross</p>
 
 <div align="center">
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
