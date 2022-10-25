@@ -64,7 +64,7 @@ class AppPanel {
 
 		const fse = require('fs-extra');
 		//@ts-ignore.
-		var sourceDir = path.join(rootUri?.path, "src/main/resources/drawable")
+		var sourceDir = path.join(rootUri?.path, "src/main/res/drawable")
 		var destinationDir = path.join(extensionUri.path, "/media/drawable")
 		fs.rmdirSync(destinationDir, { recursive: true });
 
