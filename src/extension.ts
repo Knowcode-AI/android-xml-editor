@@ -62,9 +62,15 @@ class AppPanel {
 		let workspaceFolder = vscode.workspace.getWorkspaceFolder(editor.document.uri);
 		let rootUri = workspaceFolder?.uri
 
+		let extensionConfig = vscode.workspace.getConfiguration('xmlEditor');
+		let resourcesPath = extensionConfig?.resourcesPath;
+		if(!resourcesPath || resourcesPath == "") {
+			// fall back to hard-coded path
+			resourcesPath = "src/main/res/drawable";
+		}
 		const fse = require('fs-extra');
 		//@ts-ignore.
-		var sourceDir = path.join(rootUri?.path, "src/main/resources/drawable")
+		var sourceDir = path.join(rootUri?.path, resourcesPath)
 		var destinationDir = path.join(extensionUri.path, "/media/drawable")
 		fs.rmdirSync(destinationDir, { recursive: true });
 

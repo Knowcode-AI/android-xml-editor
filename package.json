@@ -20,6 +20,18 @@
 	},
 	"main": "./out/extension.js",
 	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "Android XML Editor",
+			"properties": {
+				"xmlEditor.resourcesPath": {
+					"type": "string",
+					"default": "src/main/res/drawable",
+					"markdownDescription": "The location of project assets (**I.E.** *images & media*), relative to the root of the open workspace.\n\nThe default location is `src/main/res/drawable`",
+					"order": 1
+				}
+			}
+		},
 		"configurationDefaults": {
 			"[xml]": {
 				"editor.mouseWheelZoom": true
