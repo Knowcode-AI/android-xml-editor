@@ -1,3 +1,11 @@
+ 1 Closed
+Author 
+Label 
+Projects  Milestones 
+Assignee 
+Sort Issues list
+Assets (& cache) location should be user configurable
+#6 opened 16 hours ago by Nos78
 
 <div align="center"> <img src="https://i.imgur.com/zcQ1Z6r.png" alt="android and totalcross logo together" width="150" height="150"/> </div>
 
@@ -29,8 +37,13 @@ Extension that interprets the XML file - transforming it into HTML - and display
 
 ## 🚨 Requirements
 * VS Code 1.47+;
-* All images and media (assets) must be in this `src/main/resources/drawable` directory;
+* By default, the plugin looks for images and media (assets) in this `src/main/res/drawable` directory;
 * **As this is an alpha version, the plugin only supports `content-layout`**.
+
+
+**NEW:** Resources Path now user-configurable
+* The assets location can now be configured at the user (all workspaces) or per-workspace level by using vscode *File->Settings*, and navigating to *Android XML Editor* within the extensions tab. The new path should be relative to the workspace root. VSCode workspace settings override any user setting.
+* **Example:** A workspace opened at `~/src/android/helloWorld/` contains the default android project sub-directories. The workspace resources path setting would need to be `app/src/main./res/drawable`
 
 ## 👩‍💻 Using Android-XML-Editor plugin
 
